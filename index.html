@@ -12,11 +12,33 @@
     
 </head>
 <body>
+    <button class="settings">
+        <svg stroke="currentColor" 
+            fill="none" stroke-width="2" 
+            viewBox="0 0 24 24" stroke-linecap="round" 
+            stroke-linejoin="round" height="2em" 
+            width="2em" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+    </button>
+    <div class="menu">
+        <button class="changeCity">Change Default City</button>
+        <input type="text" class="newCity hide" placeholder="Search City...">
+    </div>
+    
+    <div class="history">
+        <div class="prev-city">
+            <h5>p-city name 1</h5>
+            <h5>temp</h5>
+        </div>
+    </div>
     <div class="card">
         <div class="search">
             <input type="text" class="search-bar" placeholder="Search City...">
             <button><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"></path></svg></button>
         </div>
+        <button id="btnCurrent">Use Current Location</button>
         <div class="weather loading">
             <h2 class="city">Weather in Denver</h2>
             <h1 class="temp">51°F</h1>
@@ -26,9 +48,24 @@
             </div>
             <div class="humidity">Humidity: 60%</div>
             <div class="wind">Wind speed: 6.2 m/h</div>
-            
+            <button class="details">More Details</button>
         </div>
     </div>
+
+    <!-- More details modal -->
+    <div class="modal hide">
+        <button class="close right">X</button>
+        <h1 class="modal-title">Modal Title</h1>
+        <div>
+            <h2 class="feels">Feels Like: </h2>
+        </div>
+        <div class="high">Today's high</div>
+        <div class="low">Today's low</div>
+        <div class="sunset">Sunset</div>
+        <div class="sunrise">sunrise</div>
+    </div>
+    
+
     <script src="./config.js" type="text/javascript"></script>
     <script src="./scripts.js" type="text/javascript"></script>
 </body>
