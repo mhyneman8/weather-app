@@ -131,11 +131,14 @@ document.querySelector(".changeCity").addEventListener("click", function() {
     document.querySelector(".newCity").classList.remove("hide");
 })
 
-// new city input
+// new default city input
 document.querySelector(".newCity").addEventListener("keyup", function(event) {
     if (event.key == "Enter") {
         let newCity = document.querySelector(".newCity").value;
-        localStorage.setItem("defaultCity", newCity)
+        document.querySelector(".menu").style.visibility = "hidden";
+        document.querySelector(".newCity").classList.add("hide");
+        
+        localStorage.setItem("defaultCity", newCity);
         weather.fetchWeather(newCity);
     }
 });

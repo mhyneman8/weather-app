@@ -166,6 +166,7 @@ h1 .temp {
 	flex-direction: column;
 	transition: 0.5s ease-in-out;
 	text-align: center;
+	z-index: 2;
 }
 
 .changeCity {
