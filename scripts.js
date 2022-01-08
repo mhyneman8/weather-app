@@ -8,9 +8,25 @@ let weather = {
             + this.apiKey
         )
         .then((response) => response.json())
+        .then((data) => this.displayWeather(data))
+        .catch((error) => {
+            alert("Enter valid city")
+            console.error("Error:", error);
+        });
+    },
+    fetchLatWeather: function(lat, lon) {
+        fetch(
+            "https://api.openweathermap.org/data/2.5/weather?lat="
+            + lat
+            + "&lon="
+            + lon
+            + "&units=imperial&appid="
+            + this.apiKey
+        )
+        .then((response) => response.json())
         .then((data) => this.displayWeather(data));
     },
-    getLocation: (ev) => {
+    getLocation: () => {
         let opts = {
             enableHighAccuracy: true,
             timeout: 1000 * 10,
@@ -19,32 +35,15 @@ let weather = {
         navigator.geolocation.getCurrentPosition(weather.ftw, weather.wtf, opts);
     },
     ftw: (position) => {
-        // navigator.geolocation.getCurrentPosition(locationSuccess);
-        // function locationSuccess(position) {
-            let latitude = position.coords.latitude;
-            let longitude = position.coords.longitude;
-            console.log(this.apiKey)
-            fetch (
-              "https://api.openweathermap.org/data/2.5/weather?lat="
-            + latitude
-            + "&lon="
-            + longitude
-            + "&appid="
-            + this.apiKey   
-            ).then((response) => response.json())
-            .then((data) => this.displayWeather(data))
-            console.log(latitude);
-            console.log(longitude);
-    },
-
-    //     //get position
-    //     do
+        let lat = (position.coords.latitude);
+        let lon = (position.coords.longitude);
     
-    // wtf: (err) => {
-      
-    //     alert("Oops, could not find you.");
-    //     // console.error(err);
-    // },
+        weather.fetchLatWeather(lat, lon);
+    },
+    wtf: (err) => {
+        alert("Oops, couldn't find you.");
+        console.error(err);
+    },
     displayWeather: function(data) {
         const { name } = data;
         const { icon, description } = data.weather[0];
@@ -52,11 +51,13 @@ let weather = {
         const { speed } = data.wind;
         const { sunset, sunrise } = data.sys;
         const ss = new Date(sunset * 1000);
-        const ssHrs = ss.getHours() - 12;
-        const ssMins = ss.getMinutes();
+        const ssHrs = ss.getHours();
+        const ssMins = (ss.getMinutes() < 10 ? "0" : "") + ss.getMinutes();
         const sr = new Date(sunrise * 1000);
-        const srHrs = sr.getHours() - 12;
-        const srMins = sr.getMinutes();
+        const srHrs = sr.getHours() > 12 ? -12 : sr.getHours() ;
+        const srMins = (sr.getMinutes() < 10 ? "0" : "") + sr.getMinutes();
+        const ssAmPm = (ss.getHours() > 12 ? " PM" : " AM");
+        const srAmPm = (sr.getHours() > 12 ? " PM" : " AM");
 
         // call weather data to display
         document.querySelector(".city").innerText = "Weather in " + name;
@@ -76,21 +77,51 @@ let weather = {
         document.querySelector(".feels").innerText = "Feels like: " + Math.round(feels_like) + "°F";
         document.querySelector(".high").innerText = "The high today is: " + Math.round(temp_max) + "°F";
         document.querySelector(".low").innerText = "The low today is: " + Math.round(temp_min) + "°F";
-        document.querySelector(".sunrise").innertext = "Sunrise starts at: " + srHrs + ":" + srMins + " PM";
-        document.querySelector(".sunset").innerText = "Sunset starts at: " + ssHrs +":" + ssMins + " AM";
-
+        document.querySelector(".sunrise").innerText = "Sunrise starts at: " + srHrs + ":" + srMins + srAmPm;
+        document.querySelector(".sunset").innerText = "Sunset starts at: " + ssHrs +":" + ssMins + ssAmPm;
+       
         // find users location
-        document.getElementById("btnCurrent").addEventListener("click", weather.getLocation);
+        document.querySelector(".btnCurrent").addEventListener("click", weather.getLocation);
+
+        // modal show
+        document.querySelector(".details").addEventListener("click", function() {
+            document.querySelector(".modal").classList.add("show");
+            // changes emoji based on feels_like temp
+            weather.emoji(feels_like);
+        }),
+        // modal close
+        document.querySelector(".close").addEventListener("click", function() {
+            document.querySelector(".modal").classList.remove("show");
+        })
     },
     search: function() {
         this.fetchWeather(document.querySelector(".search-bar").value);
-    }
-};
+    },
+    emoji: function(temp) {
+        const face = document.querySelector(".face");
 
+        if (temp > 100) {
+            face.src = "./img/101+.jpg";
+        } else if ( temp >= 85) {
+            face.src = "./img/91-100.png";
+        }
+        else if (temp > 55) {
+            face.src = "./img/70-85.png";
+        } else if ( temp > 32) {
+            face.src = "./img/20-32.jpg";
+        }else if (temp < 20) {
+            face.src = "./img/20-.jpg";
+        } 
+        else {
+            console.log("none temp " + temp)
+        }
+    } 
+};
+// search weather on button click
 document.querySelector(".search button").addEventListener("click", function() {
     weather.search();
 });
-
+// search weather on enter hit
 document.querySelector(".search-bar").addEventListener("keyup", function(event) {
     if (event.key == "Enter") {
         weather.search();
@@ -104,29 +135,23 @@ if(localStorage.getItem("defaultCity") == null) {
     weather.fetchWeather(localStorage.getItem("defaultCity"));
 }
 
-
-
-// modal show
-document.querySelector(".details").addEventListener("click", function() {
-    document.querySelector(".modal").classList.add("show");
-})
-
-// modal close
-document.querySelector(".close").addEventListener("click", function() {
-    document.querySelector(".modal").classList.remove("show");
-})
-
 // settings
 document.querySelector(".settings").addEventListener("click", function() {
-    var menu = document.querySelector(".menu");
-    if(menu.style.visibility === "visible") {
-        menu.style.visibility = "hidden"
+    if (document.querySelector(".menu").style.visibility === "visible") {
+        document.querySelector(".menu").style.visibility = "hidden"
     } else {
-        menu.style.visibility = "visible"
+        document.querySelector(".menu").style.visibility = "visible"
     }
 })
+// menu visibility
+document.querySelector(".menu").addEventListener("mouseover", function() {
+    document.querySelector(".menu").style.visibility = "visible";
+})
+document.querySelector(".menu").addEventListener("mouseout", function() {
+    document.querySelector(".menu").style.visibility = "hidden";
+})
 
-// change city button
+// change default city button
 document.querySelector(".changeCity").addEventListener("click", function() {
     document.querySelector(".newCity").classList.remove("hide");
 })
@@ -135,10 +160,16 @@ document.querySelector(".changeCity").addEventListener("click", function() {
 document.querySelector(".newCity").addEventListener("keyup", function(event) {
     if (event.key == "Enter") {
         let newCity = document.querySelector(".newCity").value;
-        document.querySelector(".menu").style.visibility = "hidden";
-        document.querySelector(".newCity").classList.add("hide");
+
+        if(newCity == null || newCity == 0) {
+            alert("Must enter a city");
+        } else {
+            document.querySelector(".menu").style.visibility = "hidden";
+            document.querySelector(".newCity").classList.add("hide");
+            
+            localStorage.setItem("defaultCity", newCity);
+            weather.fetchWeather(newCity);
+        }
         
-        localStorage.setItem("defaultCity", newCity);
-        weather.fetchWeather(newCity);
     }
 });
