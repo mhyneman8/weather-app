@@ -51,15 +51,16 @@ let weather = {
         const { speed } = data.wind;
         const { sunset, sunrise } = data.sys;
         const ss = new Date(sunset * 1000);
-        const ssHrs = ss.getHours();
+        const ssHrs = ss.getHours() > 12 ? ss.getHours() -12 : ss.getHours();
         const ssMins = (ss.getMinutes() < 10 ? "0" : "") + ss.getMinutes();
         const sr = new Date(sunrise * 1000);
-        const srHrs = sr.getHours() > 12 ? -12 : sr.getHours() ;
+        const srHrs = sr.getHours() > 12 ? sr.getHours()-12 : sr.getHours() ;
         const srMins = (sr.getMinutes() < 10 ? "0" : "") + sr.getMinutes();
         const ssAmPm = (ss.getHours() > 12 ? " PM" : " AM");
         const srAmPm = (sr.getHours() > 12 ? " PM" : " AM");
 
         // call weather data to display
+        console.log("display: " + name);
         document.querySelector(".city").innerText = "Weather in " + name;
         document.querySelector(".icon").src = 
             "https://openweathermap.org/img/wn/" + icon + ".png";
@@ -80,6 +81,61 @@ let weather = {
         document.querySelector(".sunrise").innerText = "Sunrise starts at: " + srHrs + ":" + srMins + srAmPm;
         document.querySelector(".sunset").innerText = "Sunset starts at: " + ssHrs +":" + ssMins + ssAmPm;
        
+       
+        // call favorites on save click
+        document.querySelector(".save").addEventListener("click", function() {
+            // save favorites
+            document.querySelector("#saved-city").innerText = name + ": " + Math.round(temp) + "°F";
+            document.querySelector(".saved").classList.remove("hide");
+            // let cityArr = [];
+            // let fav1 = localStorage.getItem("firstCity");
+            // let fav2 = localStorage.getItem("secCity");
+            // let fav3 = localStorage.getItem("thirdCity");
+            // let defaultCity = localStorage.getItem("defaultCity")
+            // cityArr.push([name]);
+            // console.log("array" + cityArr)
+            // console.log( "fav " + name);
+            
+            // if (fav1 == null) {
+            //     // save 
+            //     localStorage.setItem("firstCity", name);
+            //     document.querySelector("#saved-city").innerText = name + ": " + temp + "°F";
+            //     console.log("first city")
+            // } else {
+            //     console.log("not null: " + name);
+            // }
+            // else if (fav2 == null) {
+            //     //save
+            //     localStorage.setItem("secCity", data.name);
+            //     console.log("first city")
+            // } else if (fav3 == null) {
+            //     //save
+            //     localStorage.setItem("thirdCity", data.name)
+            //     console.log("first city")
+            // } 
+            // else {
+            //     alert("Saved city list is full. Delete one before saving another.")
+            // }
+    
+            // let savedCities = [];
+            // // let newFav = [data.name, data.main.temp]
+            // console.log(data.name);
+            
+            // console.log(old)
+            // savedCities.unshift([old]);
+            // savedCities.push([data.name, Math.round(data.main.temp)]);
+            // console.log(savedCities);
+    
+            
+            
+            // savedCities.push("Test");
+            // localStorage.setItem("saved_citis", savedCities);   
+        });
+        // delete favorite 
+        document.querySelector(".saved .close").addEventListener("click", function () {
+            document.querySelector(".saved").classList.add("hide");
+        })
+
         // find users location
         document.querySelector(".btnCurrent").addEventListener("click", weather.getLocation);
 
@@ -90,12 +146,15 @@ let weather = {
             weather.emoji(feels_like);
         }),
         // modal close
-        document.querySelector(".close").addEventListener("click", function() {
+        document.querySelector(".modal .close").addEventListener("click", function() {
             document.querySelector(".modal").classList.remove("show");
-        })
+        });
+        
     },
     search: function() {
         this.fetchWeather(document.querySelector(".search-bar").value);
+        document.querySelector(".search-bar").value = null;
+        // weather.favorites(name, temp)
     },
     emoji: function(temp) {
         const face = document.querySelector(".face");
@@ -107,15 +166,17 @@ let weather = {
         }
         else if (temp > 55) {
             face.src = "./img/70-85.png";
-        } else if ( temp > 32) {
+        } else if ( temp > 31) {
             face.src = "./img/20-32.jpg";
-        }else if (temp < 20) {
+        } else if (temp < 32) {
+            console.log("fix this");
+        } else if (temp < 20) {
             face.src = "./img/20-.jpg";
         } 
         else {
             console.log("none temp " + temp)
         }
-    } 
+    },
 };
 // search weather on button click
 document.querySelector(".search button").addEventListener("click", function() {
@@ -173,3 +234,5 @@ document.querySelector(".newCity").addEventListener("keyup", function(event) {
         
     }
 });
+
+

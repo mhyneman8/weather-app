@@ -29,7 +29,8 @@ body {
 }
 
 .search button,
-.close {
+.close,
+.save {
 	margin: 0.5em;
 	border-radius: 50%;
 	border: none;
@@ -43,8 +44,40 @@ body {
 }
 button:hover,
 .details:hover,
-.settings:hover {
+.settings:hover,
+.btnCurrent:hover,
+.save:hover {
 	background: #7c7c7c6b;
+}
+
+.btnCurrent {
+	margin: 0 0.3rem;
+	border-radius: 20px;
+	border: none;
+	padding: 3px 7px;
+	background: #7c7c7c2b;
+	color: white;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+}
+
+.save {
+	margin: -41px 0;
+}
+
+.saved {
+	position: fixed;
+	top: 10px;
+	left: 10%;
+	display: flex;
+	flex-direction: row;
+	/* margin-left: 1.4rem; */
+	padding-left: 2em;
+	border-radius: 30px;
+	height: 51px;
+	line-height: 1px;
+	background-color: #000000d0;
+	color: white;
 }
 
 .right {
@@ -73,11 +106,15 @@ input.search-bar {
 	font-family: inherit;
 	font-size: 105%;
 	width: calc(100% - 100px);
+	text-transform: capitalize;
 }
 
-h1 .temp {
-	margin: 0;
-	margin-bottom: 0.4em;
+.city {
+	margin: 1.2rem auto;
+}
+
+.temp {
+	margin: 0.8rem 0.3rem;
 }
 
 .description {
@@ -111,7 +148,9 @@ h1 .temp {
 
 .high,
 .low,
-.wind {
+.wind,
+.sunset,
+.sunrise {
 	margin: 0.8em 0.2em;
 }
 
@@ -129,6 +168,11 @@ h1 .temp {
 	display: block;
 }
 
+.modal-title {
+	text-align: center;
+	margin-top: 0px;
+}
+
 .modal-content {
 	background-color: #fefefe;
 	margin: auto;
@@ -136,6 +180,12 @@ h1 .temp {
 	border: 1px solid #888;
 	width: 80%;
 	max-width: 960px;
+}
+
+.face {
+	margin: 10px 75px;
+	width: 60px;
+	height: auto;
 }
 
 .settings {
@@ -166,7 +216,7 @@ h1 .temp {
 	flex-direction: column;
 	transition: 0.5s ease-in-out;
 	text-align: center;
-	z-index: 2;
+	z-index: 5;
 }
 
 .changeCity {
