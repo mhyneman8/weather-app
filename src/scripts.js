@@ -147,11 +147,15 @@ let weather = {
     
         if(city1 == null) {
             // save favorites
-            document.querySelector("#city1").querySelector(".savedCityName").innerText = name;
-            document.querySelector("#city1").classList.remove("hide");
-            localStorage.setItem("city1", name);
+            if(name == city2 || name == city3) {
+
+            } else {
+                document.querySelector("#city1").querySelector(".savedCityName").innerText = name;
+                document.querySelector("#city1").classList.remove("hide");
+                localStorage.setItem("city1", name);
+            }
         } else if(city1 !== null && city2 == null) {
-            if(name == city1){
+            if(name == city1 || name == city3){
                 
             } else {
                 document.querySelector("#city2").querySelector(".savedCityName").innerText = name;
