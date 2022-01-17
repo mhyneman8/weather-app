@@ -1,0 +1,259 @@
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 120%;
+	background: #222;
+	background: url('https://source.unsplash.com/1600x900/?landscape');
+}
+
+.card,
+.modal {
+	background: #000000d0;
+	color: white;
+	padding: 2em;
+	border-radius: 30px;
+	width: 100%;
+	max-width: 420px;
+	margin: 1em;
+	height: 316px;
+}
+
+.search {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.search button,
+.close,
+.save {
+	margin: 0.5em;
+	border-radius: 50%;
+	border: none;
+	height: 44px;
+	width: 44px;
+	outline: none;
+	background: #7c7c7c2b;
+	color: white;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+}
+button:hover,
+.details:hover,
+.settings:hover,
+.btnCurrent:hover,
+.save:hover {
+	background: #7c7c7c6b;
+}
+
+.close {
+	height: 40px;
+	width: 40px;
+}
+
+.btnCurrent {
+	margin: 0 0.3rem;
+	border-radius: 20px;
+	border: none;
+	padding: 3px 7px;
+	background: #7c7c7c2b;
+	color: white;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+}
+
+.save {
+	margin: -73px 0;
+}
+
+.flex-col {
+	position: fixed;
+	top: 10px;
+	left: 3%;
+	display: flex;
+	flex-direction: row;
+}
+
+.saved {
+	display: flex;
+	flex-direction: row;
+	margin-left: 1.4rem;
+	padding-right: 2em;
+	border-radius: 30px;
+	height: 51px;
+	width: 30%;
+	min-width: 140px;
+	max-width: 200px;
+	line-height: 1px;
+	background-color: #000000d0;
+	color: white;
+	cursor: pointer;
+}
+
+.right {
+	float: right;
+}
+
+.details {
+	float: right;
+	color: white;
+	background: #7c7c7c2b;
+	outline: none;
+	border: none;
+	border-radius: 20px;
+	font-size: 0.8em;
+	padding: 0.4em 1em;
+	cursor: pointer;
+}
+
+input.search-bar {
+	border: none;
+	outline: none;
+	padding: 0.4em 1em;
+	border-radius: 24px;
+	background: #7c7c7c2b;
+	color: white;
+	font-family: inherit;
+	font-size: 105%;
+	width: calc(100% - 100px);
+	text-transform: capitalize;
+}
+
+.city {
+	margin: 1.2rem auto;
+}
+
+.temp {
+	margin: 0.8rem 0.3rem;
+}
+
+.description {
+	text-transform: capitalize;
+	margin-left: 8px;
+}
+
+.flex {
+	display: flex;
+	align-items: center;
+}
+
+.weather.loading {
+	visibility: hidden;
+	max-height: 20px;
+	position: relative;
+}
+
+.weather.loading:after {
+	visibility: visible;
+	content: 'Loading...';
+	color: white;
+	position: absolute;
+	top: 0;
+	left: 20px;
+}
+
+.wind {
+	display: inline-block;
+}
+
+.high,
+.low,
+.wind,
+.sunset,
+.sunrise {
+	margin: 0.8em 0.2em;
+}
+
+.modal {
+	position: fixed;
+	z-index: 2;
+	background-color: #000;
+}
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: block;
+}
+
+.modal-title {
+	text-align: center;
+	margin-top: 0px;
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	max-width: 960px;
+}
+
+.face {
+	margin: 10px 75px;
+	width: 60px;
+	height: auto;
+}
+
+.settings {
+	background: #7c7c7c2b;
+	position: absolute;
+	top: 18px;
+	right: 2%;
+	outline: none;
+	border: none;
+	border-radius: 50%;
+	width: 43px;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+	height: 44px;
+	width: 44px;
+}
+
+.menu {
+	visibility: hidden;
+	position: absolute;
+	display: flex;
+	top: 69px;
+	right: 9px;
+	width: 170px;
+	background: white;
+	padding: 5px;
+	border-radius: 30px;
+	flex-direction: column;
+	transition: 0.5s ease-in-out;
+	text-align: center;
+	z-index: 5;
+}
+
+.changeCity {
+	outline: none;
+	border: none;
+	border-radius: 20px;
+	width: 95%;
+	background: white;
+	cursor: pointer;
+	padding: 5px 10px;
+	margin: 3px auto;
+}
+
+.newCity {
+	outline: none;
+	border: none;
+	border-radius: 20px;
+	width: 70%;
+	background: white;
+	padding: 5px 15px;
+	margin: 3px auto;
+	border: 1px solid white;
+}
+.newCity:hover {
+	border: 1px solid black;
+}
